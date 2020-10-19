@@ -2,7 +2,9 @@ package com.jlq.controller;
 
 import com.jlq.domain.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/anno")
+@SessionAttributes(value = {"msg"})  //把msg=美美存到session域对象中
 public class AnnoController {
 
     @RequestMapping("/testRequestParam")
@@ -84,6 +87,43 @@ public class AnnoController {
     }*/
 
 
+    /**
+     * SessionAttributes注解
+     * @return
+     */
+    @RequestMapping("/testSessionAttributes")
+    public String testSessionAttributes(Model model){
+        System.out.println("SessionAttributes执行了...");
+        //底层会存储到request域对象中
+        model.addAttribute("msg","菜菜");
+        return "success";
+    }
+
+    /**
+     * 从Session域中获取值
+     * @param model
+     * @return
+     */
+    @RequestMapping("/getSessionAttributes")
+    public String getSessionAttributes(Model model){
+        System.out.println("getSessionAttributes执行了...");
+        //底层会存储到request域对象中
+        String msg =(String)model.getAttribute("msg");
+        System.out.println(msg);
+        return "success";
+    }
+
+    /**
+     * 删除session
+     * @param status
+     * @return
+     */
+    @RequestMapping("/delSessionAttributes")
+    public String delSessionAttributes(SessionStatus status){
+        System.out.println("delSessionAttributes执行了...");
+        status.setComplete();
+        return "success";
+    }
 
 
 
