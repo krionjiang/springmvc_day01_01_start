@@ -1,11 +1,11 @@
 package com.jlq.controller;
 
 import com.jlq.domain.User;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author ：jlq
@@ -52,15 +52,27 @@ public class AnnoController {
      * @return
      */
     @RequestMapping(value = "/testModeAttribute")
-    public String testModeAttribute(User user){
+    public String testModeAttribute( @ModelAttribute("user01")User user){
         System.out.println("testModeAttribute执行了..."+user);
         return "success";
+    }
+
+
+    @ModelAttribute
+    public void ShowUser(String username,Map<String,User> map) {
+        System.out.println("showUser执行了...");
+        //通过用户名查询数据库(模拟)
+        User user = new User();
+        user.setUsername(username);
+        user.setAge(20);
+        user.setDate(new Date());
+        map.put("user01",user);
     }
 
     /**
      * 该方法先执行
      */
-    @ModelAttribute
+/*    @ModelAttribute
     public User ShowUser(String username) {
         System.out.println("showUser执行了...");
         //通过用户名查询数据库(模拟)
@@ -69,7 +81,9 @@ public class AnnoController {
         user.setAge(20);
         user.setDate(new Date());
         return user;
-    }
+    }*/
+
+
 
 
 
